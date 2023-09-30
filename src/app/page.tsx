@@ -1,5 +1,8 @@
 import Header from '../components/header'
 import NavigationBar from "@/components/navigation-bar";
+import dynamic from 'next/dynamic'
+
+const GameBarNoSSR = dynamic(() => import('@/components/game-bar'), { ssr: false })
 
 const navigationItems = [
     {
@@ -17,6 +20,7 @@ export default function Home() {
     <div id="main">
         <Header />
         <NavigationBar items={navigationItems}/>
+        <GameBarNoSSR />
     </div>
   )
 }
