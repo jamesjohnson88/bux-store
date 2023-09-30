@@ -4,7 +4,7 @@
             <div className="container mx-auto flex justify-between items-center">
                 {/* Logo */}
                 <div className="text-2xl font-bold">
-                    <a href="/">Bux</a>
+                    <a href="/">Bux Store</a>
                 </div>
 
                 {/* Right-side items */}
