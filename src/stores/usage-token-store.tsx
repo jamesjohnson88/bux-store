@@ -12,10 +12,12 @@ const useTokenStore = create<UsageTokenState>()(
         persist(
             (set) => ({
                 tokens: 100,
-                addTokens: (amount) => set((state) => ({ tokens: state.tokens + amount })),
-                removeTokens: (amount) => set((state) => ({ tokens: state.tokens - amount })),
-        }),
-        { name: 'usage-token-storage' }
+                addTokens: (amount) => set((state) => ({ 
+                    tokens: state.tokens + amount })),
+                removeTokens: (amount) => set((state) => ({
+                    tokens: state.tokens - amount >= 0 ? state.tokens - amount : 0 })),
+            }),
+            { name: 'usage-token-storage' }
         )
     )
 );
