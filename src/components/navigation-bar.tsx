@@ -19,7 +19,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ items }) => {
     };
 
     return (
-        <nav className={`bg-gray-800 text-white p-4`}>
+        <nav className={`bg-blue-900 text-white p-4`}>
             <div className="container mx-auto flex justify-between items-center">
                 {/* Left-side Navigation Items */}
                 <div className="flex space-x-4">
@@ -28,7 +28,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ items }) => {
                             <button className="hover:text-gray-300">
                                 {item.label} &#9662;
                             </button>
-                            <ul className="hidden absolute left-0 mt-2 space-y-2 bg-gray-800 text-white group-hover:block">
+                            <ul className="hidden absolute left-0 mt-2 space-y-2 bg-blue-900 text-white group-hover:block">
                                 {item.links.map((link, linkIndex) => (
                                     <li key={linkIndex}>
                                         <a href={link}>{link}</a>

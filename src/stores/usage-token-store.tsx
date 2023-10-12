@@ -11,7 +11,7 @@ const useTokenStore = create<UsageTokenState>()(
     devtools(
         persist(
             (set) => ({
-                tokens: 100,
+                tokens: 10,
                 addTokens: (amount) => set((state) => ({ 
                     tokens: state.tokens + amount })),
                 removeTokens: (amount) => set((state) => ({
