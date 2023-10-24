@@ -8,7 +8,6 @@ function GameBar() {
     const listingState = useProductListingStore();
 
     useEffect(() => {
-        // Check if tokens go from 1 to 0
         if (tokenState.tokens === 0) {
             listingState.lockListings();
         } else if (tokenState.tokens === 1) {
