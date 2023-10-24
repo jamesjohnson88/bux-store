@@ -24,7 +24,7 @@ const products = [
         description: 'A comprehensive guide to creating user-centered designs that delight users and drive product success.',
         price: 12.99,
         imageUrl: '/images/ux-book-1.png',
-        author: 'J. Avascript'
+        author: 'Johny Wireframes'
     },
     {
         id: 2,
@@ -121,7 +121,7 @@ export default function Home() {
     <div id="main">
         <Header />
         <NavigationBar items={navigationItems}/>
-        {/*<GameBarNoSSR />*/}
+        {<GameBarNoSSR />}
         <ProductListing products={products} />
     </div>
   )
