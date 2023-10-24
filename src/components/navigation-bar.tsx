@@ -1,5 +1,4 @@
-﻿'use client';
-
+﻿"use client"
 import React, { useState } from 'react';
 
 interface NavItem {
@@ -11,11 +10,21 @@ interface NavigationBarProps {
     items: NavItem[];
 }
 
-const NavigationBar: React.FC<NavigationBarProps> = ({ items }) => {
-    const [largeFont, setLargeFont] = useState(false);
+const fontSizes = ['text-base', 'text-lg', 'really-big', 'really-really-big', 'fucking-massive', 'yer-ma'];
 
-    const toggleFontSize = () => {
-        setLargeFont(!largeFont);
+const NavigationBar: React.FC<NavigationBarProps> = ({ items }) => {
+    const [fontSizeIndex, setFontSizeIndex] = useState(0);
+
+    const increaseFontSize = () => {
+        if (fontSizeIndex < fontSizes.length - 1) {
+            setFontSizeIndex(fontSizeIndex + 1);
+        } else {
+            setFontSizeIndex(0);
+        }
+    };
+
+    const resetFontSize = () => {
+        setFontSizeIndex(0);
     };
 
     return (
@@ -23,7 +32,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ items }) => {
             <div className="container mx-auto flex justify-between items-center">
                 {/* Left-side Navigation Items */}
                 <div className="flex space-x-4">
-                    { items.map((item, index) => (
+                    {items.map((item, index) => (
                         <div key={index} className="relative group">
                             <button className="hover:text-gray-300">
                                 {item.label} &#9662;
@@ -42,10 +51,10 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ items }) => {
                 {/* Right-side Font Size Toggle */}
                 <div className="flex items-center">
                     <button
-                        className={`${largeFont ? 'text-sm' : 'text-m'} text-gray-300`}
-                        onClick={toggleFontSize}
+                        className={`text-gray-300 ${fontSizes[fontSizeIndex]}`}
+                        onClick={increaseFontSize}
                     >
-                        {largeFont ? 'Increase Font Size' : 'Decrease Font Size'}
+                        Increase Font Size
                     </button>
                 </div>
             </div>
