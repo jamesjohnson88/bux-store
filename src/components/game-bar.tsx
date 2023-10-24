@@ -26,7 +26,7 @@ function GameBar() {
 
     return (
         <div className="w-full bg-yellow-400 p-0 m-0">
-            <div className="text-2xl font-bold">Game Bar</div>
+            <div className="text-2xl font-bold">Status: {listingState.isLocked ? "Locked" : "Unlocked"}</div>
             <div className="text-2xl font-bold">Tokens: {tokenState.tokens}</div>
             <button className="text-2xl font-bold" onClick={addToken}>
                 Add Token
