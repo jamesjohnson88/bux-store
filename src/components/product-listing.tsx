@@ -1,5 +1,5 @@
 ﻿"use client";
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useState } from 'react';
 import Product from "@/components/product";
 import useProductListingStore from "@/stores/product-listing-store";
@@ -12,8 +12,19 @@ interface ProductListingProps {
 function ProductListing({ products }: ProductListingProps) {
     const productListingState = useProductListingStore();
     const [sortType, setSortType] = useState('');
+    const [isLocked, setIsLocked] = useState<boolean | null>(null);
+
+    useEffect(() => {
+        setIsLocked(productListingState.isLocked);
+    }, [productListingState.isLocked]);
+
+    if (isLocked === null) {
+        // Return null to prevent rendering until state is set
+        return null;
+    }
     
-    var lockClass = productListingState.isLocked ? 'bg-red-500' : 'bg-green-500';
+    // todo - make use of locking mechanism
+    let lockClass = isLocked ? 'bg-red-400' : 'bg-green-400';
   
   function toggleSortType() {
     setSortType(sortType === 'Random' ? 'No' : 'Random');
@@ -23,9 +34,9 @@ function ProductListing({ products }: ProductListingProps) {
   }
   
   return (
-    <div className={`product-listing ${lockClass}`}>
+    <div className={`product-listing body-bg-gradient`}>
         <div className="container mx-auto flex justify-between items-center">
-        <button onClick={toggleSortType} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-4 rounded">
+        <button onClick={toggleSortType} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 m-4 rounded">
           Sort by price? {sortType}
         </button>
       </div>
