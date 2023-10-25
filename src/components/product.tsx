@@ -1,4 +1,5 @@
 ﻿import React from 'react';
+import Image from 'next/image';
 
 interface ProductProps {
     id: number;
@@ -22,10 +23,13 @@ function Product({ ...product }: ProductProps) {
                 {product.description}
             </p>
             <div className="flex justify-center">
-                <img
+                <Image
                     src={product.imageUrl}
                     alt={product.name}
-                    className="w-64 h-64 border border-b-blue-200"
+                    height={254}
+                    width={254}
+                    quality={30}
+                    className="border border-b-blue-200"
                 />
             </div>
         </div>

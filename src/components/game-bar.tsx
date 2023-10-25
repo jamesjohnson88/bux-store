@@ -13,7 +13,7 @@ function GameBar() {
         } else if (tokenState.tokens === 1) {
             listingState.unlockListings();
         }
-    }, [tokenState.tokens]);
+    }, [tokenState.tokens, listingState]);
 
     function addToken() {
         tokenState.addTokens(1);
