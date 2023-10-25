@@ -11,7 +11,6 @@ function GameBar() {
         if (tokenState.tokens === 0) {
             listingState.lockListings();
         } else if (tokenState.tokens === 1) {
-            console.log("unlocking listings"); // todo - we don't want to call this if we're going from 2 to 1
             listingState.unlockListings();
         }
     }, [tokenState.tokens]);
@@ -26,14 +25,13 @@ function GameBar() {
 
     return (
         <div className="w-full bg-yellow-400 p-0 m-0">
-            <div className="text-2xl font-bold">Status: {listingState.isLocked ? "Locked" : "Unlocked"}</div>
-            <div className="text-2xl font-bold">Tokens: {tokenState.tokens}</div>
+            <div className="text-2xl font-bold">Tokens: {tokenState.tokens === 0 ? "No" : "Yes"}</div>
             <button className="text-2xl font-bold" onClick={addToken}>
-                Add Token
+                [debug] Token++
             </button>
             <div />
             <button className="text-2xl font-bold" onClick={removeToken}>
-                Remove Token
+                [debug] Token--
             </button>
         </div>
     );
