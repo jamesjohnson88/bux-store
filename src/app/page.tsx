@@ -121,7 +121,7 @@ export default function Home() {
     <div id="main">
         <Header />
         <NavigationBar items={navigationItems}/>
-        {<GameBarNoSSR />}
+        {/*{<GameBarNoSSR />}*/}
         <ProductListing products={products} />
     </div>
   )

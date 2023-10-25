@@ -13,8 +13,8 @@ function LockingPopup() {
     return (
         <div className="bg-black bg-opacity-50 absolute w-full h-full flex items-start justify-center">
             <div className="bg-white m-40 p-4 rounded-lg text-center text-black relative z-10">
-                <h2 className="text-2xl font-bold mb-2">Access Denied</h2>
-                <p>This page is locked. You cannot access it at the moment.</p>
+                <h2 className="text-2xl font-bold mb-2">Whoops!</h2>
+                <p>Looks like somebody out of browsing tokens... you're going to need to win more to continue!</p>
             </div>
         </div>
     );
@@ -28,11 +28,6 @@ function ProductListing({ products }: ProductListingProps) {
     useEffect(() => {
         setShowLockingPopup(productListingState.isLocked);
     }, [productListingState.isLocked]);
-
-    if (showLockingPopup === null) {
-        // Return null to prevent rendering until state is set
-        return null;
-    }
 
     const handleToggleSortType = () => {
         setSortType(sortType === 'Random' ? 'No' : 'Random');
