@@ -1,13 +1,18 @@
-﻿function Header() {
+﻿import Image from 'next/image'
+
+function Header() {
     return (
         <header className="bg-gradient-to-t from-blue-950 to-blue-900 text-white p-4 pb-0">
             <div className="container mx-auto flex justify-between items-center">
                 {/* Logo */}
                 <div className="flex items-center pl-5 -mb-1">
-                    <img
+                    <Image
                         src="/images/bux-logo-64.png"
                         alt="Bux Store Logo"
-                        className="h-32 w-32 mr-2 drop-shadow-xl" // Adjust the height and width as needed
+                        height={128}
+                        width={128}
+                        quality={80}
+                        className="mr-2 drop-shadow-xl"
                     />
                 </div>
 
