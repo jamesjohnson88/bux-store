@@ -12,6 +12,7 @@ function Header() {
                         height={128}
                         width={128}
                         quality={80}
+                        priority={true}
                         className="mr-2 drop-shadow-xl"
                     />
                 </div>
