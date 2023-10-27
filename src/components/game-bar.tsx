@@ -1,12 +1,16 @@
 ﻿"use client";
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import useTokenStore from "@/stores/usage-token-store";
 import useProductListingStore from "@/stores/product-listing-store";
-import PopupQuiz from "@/components/pop-up-quiz";
+import PopupQuiz, {QuizQuestion} from "@/components/pop-up-quiz";
+import {shuffleArray} from "@/lib/array-utils";
 
 function GameBar() {
     const tokenState = useTokenStore();
     const listingState = useProductListingStore();
+    
+    const [questionInProgress, setQuestionInProgress] = useState(false);
+    const [currentQuestion, setCurrentQuestion] = useState<QuizQuestion | null>(null);
 
     useEffect(() => {
         if (tokenState.tokens === 0) {
@@ -24,13 +28,32 @@ function GameBar() {
         tokenState.removeTokens(1);
     }
     
-    function handleNewQuiz(){
-        return null;
+    function initQuit(){
+        fetch("/api/quiz")
+            .then((res) => res.json())
+            .then((data) => {
+                const { correct_answer, incorrect_answers } = data[0];
+                const all_answers = [correct_answer, ...incorrect_answers];
+                shuffleArray(all_answers);
+                setCurrentQuestion({
+                    ...data[0],
+                    all_answers,
+                });
+                // setQuestionInProgress(true);
+            });
     }
+    
+    function handleNewQuiz(){
+        return null;// todo- logic
+    }
+    
+    useEffect(() => {
+        initQuit();
+    }, []);
     
     return (
         <div>
-            {listingState.isLocked && <PopupQuiz />}
+            {listingState.isLocked && currentQuestion && <PopupQuiz {...currentQuestion}/>}
             <div className="w-full bg-yellow-400 p-0 m-0">
                 <div className="text-2xl font-bold">{} Tokens: {tokenState.tokens === 0 ? "No" : "Yes"}</div>
                 {/* todo - remove these buttons */}
