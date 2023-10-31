@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Product from "@/components/product";
 import LockingPopup from "@/components/locking-pop-up";
-import useProductListingStore from "@/stores/product-listing-store";
+import useTokenStore from "@/stores/usage-token-store";
 
 interface ProductListingProps {
     // @ts-ignore
@@ -10,15 +10,16 @@ interface ProductListingProps {
 }
 
 function ProductListing({ products }: ProductListingProps) {
-    const productListingState = useProductListingStore();
+    const tokenState = useTokenStore();
     const [sortType, setSortType] = useState('');
     const [showLockingPopup, setShowLockingPopup] = useState<boolean | null>(null);
 
     useEffect(() => {
-        setShowLockingPopup(productListingState.isLocked);
-    }, [productListingState.isLocked]);
+        setShowLockingPopup(tokenState.tokens === 0);
+    }, [tokenState.tokens]);
 
     const handleToggleSortType = () => {
+        tokenState.removeTokens(1);
         setSortType(sortType === 'Random' ? 'No' : 'Random');
         sortType === 'Random'
             ? products.sort((a, b) => a.id - b.id)

@@ -16,7 +16,6 @@ const navigationItems = [
     },
 ];
 
-// todo - fetch from json
 const products = [
     {
         id: 1,
