@@ -7,7 +7,6 @@ import {shuffleArray} from "@/lib/array-utils";
 function GameBar() {
     const tokenState = useTokenStore();
 
-    // const [showQuiz, setShowQuiz] = useState<boolean>(false);
     const [quizCompleted, setQuizCompleted] = useState<boolean>(false);
     const [currentQuestion, setCurrentQuestion] = useState<QuizQuestion | null>(null);
 
