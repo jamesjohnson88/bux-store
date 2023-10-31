@@ -1,34 +1,25 @@
 ﻿"use client";
 import React, {useEffect, useState} from "react";
 import useTokenStore from "@/stores/usage-token-store";
-import useProductListingStore from "@/stores/product-listing-store";
 import PopupQuiz, {QuizQuestion} from "@/components/pop-up-quiz";
 import {shuffleArray} from "@/lib/array-utils";
 
 function GameBar() {
     const tokenState = useTokenStore();
-    const listingState = useProductListingStore();
-    
-    const [questionInProgress, setQuestionInProgress] = useState(false);
+
+    // const [showQuiz, setShowQuiz] = useState<boolean>(false);
+    const [quizCompleted, setQuizCompleted] = useState<boolean>(false);
     const [currentQuestion, setCurrentQuestion] = useState<QuizQuestion | null>(null);
 
-    useEffect(() => {
-        if (tokenState.tokens === 0) {
-            listingState.lockListings();
-        } else if (tokenState.tokens === 1) {
-            listingState.unlockListings();
-        }
-    }, [tokenState.tokens]);
-
-    // todo - these will become obsolete
-    function addToken() {
-        tokenState.addTokens(1);
+    function addTokens(amount :number) {
+        tokenState.addTokens(amount);
     }
-    function removeToken() {
-        tokenState.removeTokens(1);
+    function removeTokens(amount :number) {
+        tokenState.removeTokens(amount);
     }
     
-    function initQuit(){
+    const handleStartQuiz =() =>{
+        setQuizCompleted(false);
         fetch("/api/quiz")
             .then((res) => res.json())
             .then((data) => {
@@ -39,35 +30,40 @@ function GameBar() {
                     ...data[0],
                     all_answers,
                 });
-                // setQuestionInProgress(true);
             });
     }
     
-    function handleNewQuiz(){
-        return null;// todo- logic
+    const handleNewQuiz= () =>{
+        handleStartQuiz();
     }
     
+    const handleQuizComplete =() => {
+       addTokens(3);
+       setQuizCompleted(true);
+       setCurrentQuestion(null);
+    }
+
     useEffect(() => {
-        initQuit();
+        removeTokens(1); // That's what you get for refreshing...
     }, []);
     
     return (
         <div>
-            {listingState.isLocked && currentQuestion && <PopupQuiz {...currentQuestion}/>}
-            <div className="w-full bg-yellow-400 p-0 m-0">
-                <div className="text-2xl font-bold">{} Tokens: {tokenState.tokens === 0 ? "No" : "Yes"}</div>
-                {/* todo - remove these buttons */}
-                <button className="text-2xl font-bold" onClick={addToken}>
-                    [debug] Token++
-                </button>
-                <button className="text-2xl font-bold" onClick={removeToken}>
-                    [debug] Token--
-                </button>
-                <div>
-                    <button className="text-2xl font-bold" onClick={handleNewQuiz}>
-                        Earn Tokens
-                    </button>
-                </div>
+            {!quizCompleted && currentQuestion
+                && <PopupQuiz 
+                    question={currentQuestion}
+                    onQuizComplete={handleQuizComplete}
+                    onPlayAgain={handleNewQuiz}
+                />}
+            <div className="flex w-full bg-yellow-400 p-0 m-0 font-bold text-gray-800">
+                <div className="flex-1 text-l p-2 ml-20">You have {tokenState.tokens} BuxCoin to spend on browsing!</div>
+                {tokenState.tokens === 0 ? (
+                    <div>
+                        <button className="flex-1 p-2 mr-20 text-right" onClick={handleNewQuiz}>
+                            Click to earn more BuxCoin!
+                        </button>
+                    </div>
+                ) : null}
             </div>
         </div>
     );

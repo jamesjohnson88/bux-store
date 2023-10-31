@@ -1,5 +1,6 @@
 ﻿"use client"
 import React, { useState } from 'react';
+import useTokenStore from "@/stores/usage-token-store";
 
 interface NavItem {
     label: string;
@@ -13,6 +14,8 @@ interface NavigationBarProps {
 const fontSizes = ['text-base', 'text-lg', 'really-big', 'really-really-big', 'fucking-massive', 'yer-ma'];
 
 const NavigationBar: React.FC<NavigationBarProps> = ({ items }) => {
+    
+    const tokenState = useTokenStore();
     const [fontSizeIndex, setFontSizeIndex] = useState(0);
 
     const increaseFontSize = () => {
@@ -21,10 +24,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ items }) => {
         } else {
             setFontSizeIndex(0);
         }
-    };
-
-    const resetFontSize = () => {
-        setFontSizeIndex(0);
+        tokenState.removeTokens(1);
     };
 
     return (
