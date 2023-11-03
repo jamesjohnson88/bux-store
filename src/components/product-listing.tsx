@@ -27,7 +27,7 @@ function ProductListing({ products }: ProductListingProps) {
     };
 
     return (
-        <div className="product-listing body-bg-gradient relative">
+        <div className="product-listing body-bg-gradient relative pb-10">
             {showLockingPopup && <LockingPopup />}
             <div className="container mx-auto flex justify-between items-center">
                 <button
