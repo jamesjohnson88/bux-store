@@ -1,4 +1,5 @@
-﻿import React, {useMemo, useState} from 'react';
+﻿"use client";
+import React, {useEffect, useMemo, useState} from 'react';
 import Image from 'next/image';
 import useTokenStore from "@/stores/usage-token-store";
 
@@ -34,13 +35,17 @@ function Product({ ...product }: ProductProps) {
     const tokenState = useTokenStore();
     
     const [isHovered, setIsHovered] = useState(false);
+    const [showDescription, setShowDescription] = useState(false);
+    const [showPrice, setShowPrice] = useState(false);
+    const [priceInfo, setPriceInfo] = useState({
+        includesVat: false,
+        price: Number(product.price).toFixed(2)
+    });
 
-    const priceInfo = useMemo(() => {
+    useEffect(() => {
         const randomlyIncludeVat = Math.random() > 0.5;
-        return getPrice(product.price, randomlyIncludeVat);
+        setPriceInfo(getPrice(product.price, randomlyIncludeVat));
     }, [product.price]);
-
-    const { includesVat, price } = priceInfo;
     
     const handleMouseEnter = () => {
         setIsHovered(true);
@@ -55,20 +60,21 @@ function Product({ ...product }: ProductProps) {
         alert("Item out of stock");
     }
     
+    const handleShowDescription = () => {
+        tokenState.removeTokens(1);
+        setShowDescription(true);
+    }
+    
+    const handleShowPrice = () => {
+        tokenState.removeTokens(1);
+        setShowPrice(true);
+    }
+    
     return (
         <div className="product flex flex-col bg-blue-900 border-2 border-blue-500 p-5">
-            <h3 className="font-bold">
-                {product.name}
-            </h3>
-            <p className="italic mb-2">
-                by {product.author}
-            </p>
-            <p className="text-sm flex-grow">
-                {product.description}
-            </p>
             <div className="flex justify-center">
                 <div
-                    className="relative"
+                    className="relative m-4"
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                 >
@@ -92,8 +98,40 @@ function Product({ ...product }: ProductProps) {
                     )}
                 </div>
             </div>
-            <div>£{price}</div>
-            <div>{includesVat ? '(inc. VAT)' : '(excl. VAT)'}</div>
+            <h3 className="font-bold p-5 pt-2.5 pb-1">
+                {product.name}
+            </h3>
+            <p className="italic p-5 pt-0 pb-1">
+                by {product.author}
+            </p>
+            {showDescription ? (
+                <p className="text-sm flex-grow p-5 pt-2.5 pb-1">
+                    {product.description}
+                </p>) : (
+                <button
+                    className="text-center font-bold pt-5"
+                    onClick={handleShowDescription}
+                >
+                    Show description
+                </button>
+            )}
+            {showPrice ? (
+                <>
+                    <div className="text-center font-bold pt-5">
+                        £{priceInfo.price}
+                    </div>
+                    <div className="text-center text-xs">
+                        {priceInfo.includesVat ? '(inc. VAT)' : '(excl. VAT)'}
+                    </div>
+                </>
+            ) : (
+                <button
+                    className="text-center font-bold pt-5 mb-2"
+                    onClick={handleShowPrice}
+                >
+                    Show price
+                </button>
+            )}
         </div>
     );
 }

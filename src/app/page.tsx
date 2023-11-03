@@ -117,7 +117,9 @@ const products = [
 
 export default function Home() {
   return (
-    <div id="main">
+    <div id="main"
+         className="h-screen body-bg"
+    >
         <Header />
         <NavigationBar items={navigationItems}/>
         {<GameBarNoSSR />}

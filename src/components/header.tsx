@@ -21,12 +21,20 @@ function Header() {
                 <div className="flex space-x-4">
                     {/* My Account (Placeholder) */}
                     <div className="hover:text-gray-300">
-                        <a href="/my-account">My Account</a>
+                        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                           target="_blank"
+                        >
+                            My Account
+                        </a>
                     </div>
 
                     {/* Basket (Placeholder) */}
                     <div className="hover:text-gray-300">
-                        <a href="/basket">Basket</a>
+                        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                           target="_blank"
+                        >
+                            Basket
+                        </a>
                     </div>
                 </div>
             </div>
